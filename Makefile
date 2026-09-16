@@ -19,6 +19,9 @@ PANDOC_OPTIONS=-t revealjs -s \
 # --embed-resources   # This make a single file, good for distribution
 #	-A footer.html # The footer is just too big
 
+# Show all list items immediately in this presentation only.
+public/01-access-machines.html: PANDOC_OPTIONS := $(filter-out -i,$(PANDOC_OPTIONS))
+
 public/%.html : %.md *.css
 	$(PANDOC) $(PANDOC_OPTIONS) -o $@ $<
 

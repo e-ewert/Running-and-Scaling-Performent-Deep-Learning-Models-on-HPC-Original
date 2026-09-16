@@ -1,95 +1,78 @@
 ---
-author: Alexandre Strube // Ismail Khalfaoui-Hassani
-title: Accessing the machines, intro
+author: Sabrina Benassou, Javad Kasravi, Eske Ewert
+title: Running Deep Learning Models on HPC Systems
 #subtitle: A primer in supercomputers
-date: June 01, 2026
+date: September 21, 2026
 
 ---
-## Communication:
+## Important Links
 
-Links for the complimentary parts of this course: 
+Links for the skill-up
 
-- [Zoom](https://go.fzj.de/running-and-scaling-deep-learning-models-on-HPC-zoom)
-- [Slack](https://go.fzj.de/running-and-scaling-deep-learning-models-on-HPC-slack)
-- [JSC Training Page](https://go.fzj.de/running-and-scaling-deep-learning-models-on-HPC-training-page)
-- [Judoor project page invite](https://judoor.fz-juelich.de/projects/join/training2626)
-- [This document: https://go.fzj.de/running-and-scaling-deep-learning-models-on-HPC](https://go.fzj.de/running-and-scaling-deep-learning-models-on-HPC)
-- Our mailing list for [AI news](https://lists.fz-juelich.de/postorius/lists/ai.jsc.lists.fz-juelich.de/)
-- [Survey at the end of the course](https://go.fzj.de/bringing-dl-workloads-to-jsc-survey)
-- [Virtual Environment template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
-- [SOURCE of the course/slides on Github](https://github.com/sab148/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC-Original)
+- [JuDOOR project page invitation](https://judoor.fz-juelich.de/login?show=/projects/join/training2638)
+- [Workshop slides](https://sab148.github.io/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC-Original/#/title-slide) UPDATE THIS LINK!!
+- [Workshop code on GitHub](https://github.com/sab148/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC/tree/scicoco)
+- [Jupyter-JSC](https://jupyter.jsc.fz-juelich.de)
 
-![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
+
+Please open the slides on your device so you can copy and paste from the slides.
+
+![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg){height=180px}
 
 
 ---
 
-## Goals for this course:
+## Goals for this course
 
-- Make sure you know how to access and use our machines 👩‍💻
-- Put your data in way that supercomputer can use it fast 🏃
-- Distribute your ML workload 💪
+- Access our machines in Jülich using Jupyter-JSC 👩‍💻
+- Use the file system efficiently so that the supercomputer can access your data quickly 🏃
+- Distribute your machine learning workload 💪
 
 
-![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
+![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg){height=180px}
 
 ---
 
-## Team:
+## Team
 
 ::: {.container}
 :::: {.col}
-![Alexandre Strube](pics/alex.jpg)
+![Sabrina Benassou](pics/sabrina.jpg){width=240px}
 ::::
 :::: {.col}
-![Sabrina Benassou](pics/sabrina.jpg)
+![Eske Ewert](pics/eske.jpg){width=240px}
 ::::
 :::: {.col}
-![Ismail Khalfaoui-Hassani](pics/ismail.jpeg)
-::::
-:::: {.col}
-![Javad Kasravi](pics/javad.jpg)
+![Javad Kasravi](pics/javad.jpg){width=240px}
 ::::
 :::
 
-![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
+![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg){height=120px}
 
 ---
 
-### Schedule for day 1
+### Schedule for the skill-up (Part 1 & 2)
 
 | Time          | Title        |
 | ------------- | -----------  |
-| 13:00 - 13:15 | Welcome      |
-| 13:15 - 14:00 | Introduction |
-| 14:00 - 14:15 | Coffee break |
-| 14:16 - 14:30 | Judoor, Keys |
-| 14:30 - 15:00 | SSH, Jupyter, VS Code |
-| 15:00 - 15:15 | Coffee Break |
-| 15:15 - 16:00 | Running services on the login and compute nodes | 
-| 16:00 - 16:15 | Coffee Break |
-| 16:30 - 17:00 | Sync (everyone should be at the same point) |
+| Mon, 14:30 - 15:00 | Use Jupyter-JSC to connect to JURECA  |
+| Mon, 15:00 - 15:30 | How to run code on a compute node  |
+| Mon, 15:30 - 16:00 | Train a cat classifier   |
+| Tue, 10:15 - 11:00 | Single GPU training |
+| Tue, 11:00 - 11:45 | Multiple GPU training using data parallel training |
 
----
-
-### Note
-
-Please open this document on your own browser! We will need it for the exercises.
-[https://sab148.github.io/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC-Original/](https://sab148.github.io/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC-Original/)
-
-![Mobile friendly, but you need it on your computer, really](images/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC.png)
 
 ---
 
 ### Jülich Supercomputers
 
-![JSC Supercomputer Strategy](images/machines.png)
+![JSC Supercomputer Strategy](images/machines.png){height=520px}
 
 ---
 
 ### What is a supercomputer?
 
-- Compute cluster: Many computers bound together locally 
+- Compute cluster: Many computers bound together locally
 - Supercomputer: A lot of computers bound together locally 😒
   - with a fancy network 🤯
 
@@ -97,107 +80,50 @@ Please open this document on your own browser! We will need it for the exercises
 
 ### Anatomy of a supercomputer
 
--  Login Nodes: Normal machines, for compilation, data transfer, scripting, etc. No GPUs. Limited number of shared CPU cores.
-- Compute Nodes: Guess what? 
+- Login nodes: Normal machines for compilation, data transfer, scripting, etc. No GPUs. A limited number of shared CPU cores.
+- Compute nodes: Guess what?
   - For compute! With GPUs! 🤩
 - High-speed, ultra-low-latency network
 - Shared networked file systems
-- Some numbers we should (more or less) know about them:
-    - Nodes
-    - Cores, Single-core Performance
-    - RAM
-    - Network: Bandwidth, Latency
-    - Accelerators (e.g. GPUs)
-      - GPU MEMORY
 
 ---
 
 ### JURECA DC Compute Nodes
 
-- 192 Accelerated Nodes (with GPUs)
-- 2x AMD EPYC Rome 7742 CPU 2.25 GHz (128 cores/node)
+- 192 accelerated nodes (with GPUs)
+- 2x AMD EPYC Rome 7742 CPUs at 2.25 GHz (128 cores/node)
 - 512 GiB memory
-- Network Mellanox HDR infiniband (FAST💨 and EXPENSIVE💸)
-- 4x NVIDIA A100 with 40gb 😻
+- Network: Mellanox HDR InfiniBand (FAST💨 and EXPENSIVE💸)
+- 4x NVIDIA A100 with 40 GB 😻
 - TL;DR: 24576 cores, 768 GPUs 💪
-- Way deeper technical info at [Jureca DC Overview](https://apps.fz-juelich.de/jsc/hps/jureca/configuration.html)
+- Way deeper technical info at [JURECA DC Overview](https://apps.fz-juelich.de/jsc/hps/jureca/configuration.html)
 
 ---
 
 <!-- ### JUWELS Booster Compute Nodes
 
 - 936 Nodes
-- 2x AMD EPYC Rome 7402 CPU 2.7 GHz (48 cores x 2 threads = 96 virtual cores/node)
+- 2x AMD EPYC Rome 7402 CPUs at 2.7 GHz (48 cores x 2 threads = 96 virtual cores/node)
 - 512 GiB memory
-- Network Mellanox HDR infiniband (FAST💨 and EXPENSIVE💸)
-- 4x NVIDIA A100 with 40gb 😻
+- Network: Mellanox HDR InfiniBand (FAST💨 and EXPENSIVE💸)
+- 4x NVIDIA A100 with 40 GB 😻
 - TL;DR: 89856 cores, 3744 GPUs, 468 TB RAM 💪
-- Way deeper technical info at [Juwels Booster Overview](https://apps.fz-juelich.de/jsc/hps/juwels/booster-overview.html)
+- Way deeper technical info at [JUWELS Booster Overview](https://apps.fz-juelich.de/jsc/hps/juwels/booster-overview.html)
 
 --- -->
-
-## How do I use a Supercomputer?
-
-- Batch: For heavy compute, ML training
-- Interactively: Jupyter
-
----
 
 ### You don't use the whole supercomputer
 
 #### You submit jobs to a queue asking for resources
 
-![](images/supercomputer-queue.svg)
-
----
-
-### You don't use the whole supercomputer
-
-#### And get results back
-
-![](images/supercomputer-queue-2.svg)
-
----
-
-### You don't use the whole supercomputer
-
-#### You are just submitting jobs via the login node
-
-![](images/supercomputer-queue-3.svg)
-
----
-
-### You don't use the whole supercomputer
-
-#### You are just submitting jobs via the login node
-
-![](images/supercomputer-queue-4.svg)
-
----
-
-### You don't use the whole supercomputer
-
-#### You are just submitting jobs via the login node
-
-![](images/supercomputer-queue-5.svg)
-
----
-
-### You don't use the whole supercomputer
-
-
+![](images/supercomputer-queue.svg){height=400px}
 
 ::: {.container}
 :::: {.col}
-- Your job(s) enter the queue, and wait for its turn
+- Your job(s) enter the queue and wait for their turn
 - When there are enough resources for that job, it runs
 ::::
-:::: {.col}
-![](images/midjourney-queue.png)
-::::
 :::
-
-![]()
 
 ---
 
@@ -205,501 +131,172 @@ Please open this document on your own browser! We will need it for the exercises
 
 #### And get results back
 
-![](images/queue-finished.svg)
+![](images/queue-finished.svg){height=500px}
 
 ---
 
 ### Supercomputer Usage Model
-- Using the the supercomputer means submitting a job to a batch system.
+
+- Using the supercomputer means submitting a job to a batch system.
 - No node-sharing. The smallest allocation for jobs is one compute node (4 GPUs).
-- Maximum runtime of a job: 24h.
+- Maximum runtime of a job: 24 h.
 
 ---
 
-### Recap:
+### Recap
 
-- Login nodes are for submitting jobs, download and move files, compile, etc
-- NOT FOR TRAINING NEURAL NETS!
-
----
-
-### Recap:
-
-- User submit jobs
-- Job enters the queue
-- When it can, it runs
-- Sends results back to user
+- Login nodes are for submitting jobs, downloading and moving files, compiling code, etc.
+- NOT FOR TRAINING DEEP LEARNING MODELS!
 
 ---
 
-### Connecting to Jureca DC
+#### Compute time
 
-#### Getting compute time
-- Go to [https://judoor.fz-juelich.de/projects/join/training2626](https://judoor.fz-juelich.de/projects/join/training2626)
-- Join the course project `training2626`
-- Sign the Usage Agreements ([Video](https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view))
 - Compute time allocation is based on compute projects. For every compute job, a compute project pays.
-- Time is measured in core-hours. One hour of Jureca DC is 128 core-hours.
-- Example: Job runs for 8 hours on 64 nodes of Jureca DC: 8 * 64 * 128 = 65536 core-h!
+- Time is measured in core-hours. One hour of JURECA DC is 128 core-hours.
+- Example: A job runs for 8 hours on 64 nodes of JURECA DC:
+8 * 64 * 128 = 65536 core-h!
 
 ---
 
-## Jupyter
+### Connecting to JURECA DC
 
-[jupyter-jsc.fz-juelich.de](https://jupyter-jsc.fz-juelich.de)
+#### Recall that you should have completed the following preparations already:
 
-- Jupyter-JSC uses the queue 
-- When you are working on it, you are using project time ⌛️
-- *Yes, if you are just thinking and looking at the 📺, you are burning project time*🤦‍♂️
-- *Yes, if you are just thinking and looking at the 📺, you are slowing down the queue for everyone*🤦
-- It's useful for small tests - not for full-fledged development 🙄
+- Go to the course project on JuDOOR: [https://judoor.fz-juelich.de/login?show=/projects/join/training2638](https://judoor.fz-juelich.de/login?show=/projects/join/training2638).
+- Join the workshop's compute project `training2638`.
+- Sign the Usage Agreements ([video](https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view)).
 
 ---
 
-## Jupyter
+## Connecting to JURECA DC via Jupyter-JSC
 
-#### Pay attention to the partition - DON'T RUN IT ON THE LOGIN NODE!!!
+Go to https://jupyter.jsc.fz-juelich.de/hub/login and choose **Sign in with JSC account**.
 
-![](images/jupyter-partition.png)
-
----
-
-## Connecting to Jureca DC
+![](images/login_02.png){height=350px}
 
 ---
 
-## VSCode
+## Connecting to JURECA DC via Jupyter-JSC
 
-- [Download VScode: code.visualstudio.com](https://code.visualstudio.com/download)
-- Install and run it
-  - On the local terminal, type `code`
-- Install [Remote Development Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-- Install [Remote: SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
-- If you have Windows, you need WSL as explained on the email.
+Log in with your JuDOOR account.
 
----
+![](images/login_03.png){width=800px}
 
-## VSCode
-
-### Now with the remote explorer tab
-![](images/vscode-welcome.png)
-
+- Confirm that you allow the JSC Login service to use the information provided by the identity provider.
 
 ---
 
-#### SSH
-- SSH is a secure shell (terminal) connection to another computer
-- You connect from your computer to the LOGIN NODE
-- Security is given by public/private keys
-- A connection to the supercomputer needs a 
-    1. Key,
-    2. Configuration
-    3. Key/IP address known to the supercomputer
+## Create a new JupyterLab
+
+![](images/jupyter_01.png){width=1100px}
 
 ---
 
-### SSH
+## Create a new JupyterLab
 
-#### Create key in VSCode's Terminal (menu View->Terminal)
+Please choose the following configuration. In particular, it is **important** that you choose the **login node**!
+
+![](images/jupyter_02.png){height=380px}
+
+Click **Open** once it is ready.
+
+---
+
+## Open a terminal on the login node
+
+![](images/jupyter_03.png){height=450px}
+
+---
+
+## Open a terminal on the login node
+
+![](images/jupyter_04.png){width=1050px}
+
+---
+
+### Exercise: Create folders for the workshop
+Use the terminal in Jupyter-JSC for the following steps:
+
+1. Create your course folder.
 
 ```bash
-mkdir ~/.ssh/
-ssh-keygen -a 100 -t ed25519 -f ~/.ssh/id_ed25519-JSC
+mkdir $PROJECT/dl-on-hpc-workshop/$USER
 ```
 
+If you click on `$PROJECT/dl-on-hpc-workshop` on the left, you should see a folder with your name.
+
+---
+
+### Exercise: Create folders for the workshop
+2. Create a shortcut (link) to your course folder in your home folder.
+
 ```bash
-$ ssh-keygen -a 100 -t ed25519 -f ~/.ssh/id_ed25519-JSC
-Generating public/private ed25519 key pair.
-Enter passphrase (empty for no passphrase): 
-Enter same passphrase again: 
-Your identification has been saved in /Users/khalfaoui1/.ssh/id_ed25519-JSC
-Your public key has been saved in /Users/khalfaoui1/.ssh/id_ed25519-JSC.pub
-The key fingerprint is:
-SHA256:EGNNC1NTaN8fHwpfuZRPa50qXHmGcQjxp0JuU0ZA86U khalfaoui1@homepc
-The keys randomart image is:
-+--[ED25519 256]--+
-|      *++oo=o. . |
-|     . =+o .= o  |
-|      .... o.E..o|
-|       .  +.+o+B.|
-|        S  =o.o+B|
-|          . o*.B+|
-|          . . =  |
-|           o .   |
-|            .    |
-+----[SHA256]-----+
+rm -rf ~/course
+ln -s $PROJECT/dl-on-hpc-workshop/$USER ~/course
 ```
 
----
-
-### SSH
-
-#### Configure SSH session
+3. Enter your course folder.
 
 ```bash
-code $HOME/.ssh/config
-```
-
-Windows users, from Ubuntu WSL
-(Change username for your user on windows)
-
-```bash
-ls -la /mnt/c/Users/
-mkdir /mnt/c/Users/USERNAME/.ssh/
-cp $HOME/.ssh/* /mnt/c/Users/USERNAME/.ssh/
-```
-
-
----
-
-### SSH
-
-#### Configure SSH session
-
-```bash
-Host jureca
-        HostName jureca.fz-juelich.de
-        User [MY_USERNAME]   # Here goes your username, not the word MY_USERNAME.
-        AddressFamily inet
-        IdentityFile ~/.ssh/id_ed25519-JSC
-        MACs hmac-sha2-512-etm@openssh.com
-```
-
-Copy contents to the config file and save it 
-
-**REPLACE [MY_USERNAME] WITH YOUR USERNAME!**
-
----
-
-### SSH
-
-####  JSC restricts from where you can login
-#### So we need to:
-1. Find our ip range
-2. Add the range and key to [Judoor](https://judoor.fz-juelich.de)
-
----
-
-### SSH
-
-#### Find your ip/name range
-
-Open **[https://www.whatismyip.com](https://www.whatismyip.com)**
-
----
-
-### SSH
-
-#### Find your ip/name range
-
-![](images/whatismyip.png)
-
-- Let's keep this inside vscode: `code key.txt` and paste the number you got
-
----
-
-### SSH
-
-Did everyone get their **own** ip address?
-
----
-
-### SSH - EXAMPLE
-
-- I will use the number `93.199.55.163`
-- **YOUR NUMBER IS DIFFERENT**
-
-
----
-
-### SSH - Example: `93.199.55.163`
-
-- Go to VSCode and make it simpler, replace the 2nd half with `"0.0/16"`:
-  - It was `93.199.55.163`
-  - Becomes `93.199.0.0/16` (with YOUR number, not with the example)
-- Add a `from=""` around it
-- So, it looks like this, now: `from="93.199.0.0/16"`
-- Add a second magic number, with a comma: `,10.0.0.0/8` 🧙‍♀️
-- I promise, the magic is worth it 🧝‍♂️ (If time allows)
-- In the end it looks like this: `from="93.199.0.0/16,10.0.0.0/8"` 🎬
-- Keep it open, we will use it later
-- If you are from FZJ, also add "134.94.0.0/16" with a comma
-
----
-
-### SSH - Example: `93.199.0.0/16`
-
-#### Copy your ssh key
-- Terminal: `code ~/.ssh/id_ed25519-JSC.pub`
-- Something like this will open:
-
-- `ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F khalfaoui@demonstration.fz-juelich.de`
-
-- Paste this line at the same `key.txt` which you just opened
-
----
-
-### SSH
-
-#### Example: `93.199.0.0/16`
-
-- Put them together and copy again:
-- `from="93.199.0.0/16,10.0.0.0/8" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F khalfaoui@demonstration.fz-juelich.de`
-
----
-
-### SSH
-
-- Let's add it on [Judoor](https://judoor.fz-juelich.de)
-- ![](images/manage-ssh-keys.png)
-- Do it for JURECA and JUDAC with the same key
-
----
-
-### SSH
-
-#### Add new key to [Judoor](https://judoor.fz-juelich.de)
-
-![](images/manage-ssh-keys-from-and-key.png){ width=850px }
-
-This might take some minutes
-
----
-
-### SSH: Exercise
-
-That's it! Give it a try (and answer yes)
-
-```bash
-$ ssh jureca
-The authenticity of host 'jrlogin03.fz-juelich.de (134.94.0.185)' cannot be established.
-ED25519 key fingerprint is SHA256:ASeu9MJbkFx3kL1FWrysz6+paaznGenChgEkUW8nRQU.
-This key is not known by any other names
-Are you sure you want to continue connecting (yes/no/[fingerprint])? Yes
-**************************************************************************
-*                            Welcome to Jureca DC                   *
-**************************************************************************
-...
-...
-khalfaoui1@jrlogin03~ $ 
-```
-
----
-
-### SSH: Exercise 
-#### Make sure you are connected to the supercomputer
-
-```bash
-# Create a folder for myself
-mkdir $PROJECT_training2626/$USER
-
-# Create a shortcut for the project on the home folder
-rm -rf ~/course ; ln -s $PROJECT_training2626/$USER ~/course
-
-# Enter course folder and
 cd ~/course
+```
 
-# Where am I?
-pwd
+---
 
-# We well need those later
+### Exercise: Create folders for the workshop
+4. Link certain cache directories to the course folder. They should not be in `$HOME`, as it has limited space.
+
+```bash
 mkdir ~/course/.cache
 mkdir ~/course/.config
 mkdir ~/course/.fastai
 
-rm -rf $HOME/.cache ; ln -s ~/course/.cache $HOME/
-rm -rf $HOME/.config ; ln -s ~/course/.config $HOME/
-rm -rf $HOME/.fastai ; ln -s ~/course/.fastai $HOME/
+rm -rf $HOME/.cache
+ln -s ~/course/.cache $HOME/
+rm -rf $HOME/.config
+ln -s ~/course/.config $HOME/
+rm -rf $HOME/.fastai
+ln -s ~/course/.fastai $HOME/
 ```
+
+If you click *View > Show Hidden Files*, you should see the cache folders you created.
 
 ---
 
 ## Working with the supercomputer's software
 
-- We have literally thousands of software packages, hand-compiled for the specifics of the supercomputer.
+- We have literally thousands of software packages, compiled specifically for the supercomputer.
 - [Full list](https://www.fz-juelich.de/en/ias/jsc/services/user-support/using-systems/software)
 - [Detailed documentation](https://apps.fz-juelich.de/jsc/hps/jureca/software-modules.html)
 
 ---
 
-## Software
+### Example: PyTorch
 
-#### Tool for finding software: `module spider`
-
-```bash
-khalfaoui1$ module spider PyTorch
-------------------------------------------------------------------------------------
-  PyTorch:
-------------------------------------------------------------------------------------
-    Description:
-      Tensors and Dynamic neural networks in Python with strong GPU acceleration. 
-      PyTorch is a deep learning framework that puts Python first.
-
-     Versions:
-        PyTorch/1.7.0-Python-3.8.5
-        PyTorch/1.8.1-Python-3.8.5
-        PyTorch/1.11-CUDA-11.5
-        PyTorch/1.12.0-CUDA-11.7
-     Other possible modules matches:
-        PyTorch-Geometric  PyTorch-Lightning
-...
-```
-
----
-
-## What do we have?
-
-`module avail` (Inside hierarchy)
-
----
-
-## Module hierarchy
-
-- Stage (full collection of software of a given year)
-- Compiler
-- MPI
-- Module
-
-- Eg: `module load Stages/2025 GCC OpenMPI PyTorch`
-
----
-
-#### What do I need to load such software?
-
-`module spider Software/version`
-
----
-
-## Example: PyTorch
-
-Search for the software itself - it will suggest a version
-
-![](images/module-spider-1.png)
-
----
-
-## Example: PyTorch
-
-Search with the version - it will suggest the hierarchy
-
-![](images/module-spider-2.png)
-
----
-
-## Example: PyTorch
-
-(make sure you are still connected to Jureca DC)
+1. Copy and paste these lines:
 
 ```bash
-$ python
-Python 3.12.3 (main, Nov 10 2025, 00:00:00) 
-[GCC 11.5.0 20240719 (Red Hat 11.5.0-11)] on linux
-Type "help", "copyright", "credits" or "license" for more information.
->>> import torch
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-ModuleNotFoundError: No module named 'torch'
-```
-
-Oh noes! 🙈
-
-Let's bring Python together with PyTorch!
-
----
-
-## Example: PyTorch
-
-Copy and paste these lines
-```bash
-# This command fails, as we have no proper pytorch
-python -c "import torch ; print(torch.__version__)" 
-# So, we load the correct modules...
-module load Stages/2025
+# This command fails, as we do not have the correct PyTorch environment.
+python -c "import torch; print(torch.__version__)"
+# Then load the correct modules.
+module load Stages/2026
 module load GCC OpenMPI Python PyTorch
-# And we run a small test: import pytorch and ask its version
-python -c "import torch ; print(torch.__version__)" 
+# And we run a small test: import PyTorch and ask for its version.
+python -c "import torch; print(torch.__version__)"
 ```
 
-Should look like this:
-```bash
-$ python -c "import torch ; print(torch.__version__)" 
-Traceback (most recent call last):
-  File "<string>", line 1, in <module>
-ModuleNotFoundError: No module named 'torch'
-$ module load Stages/2025
-$ module load GCC OpenMPI Python PyTorch
-$ python -c "import torch ; print(torch.__version__)" 
-2.1.2
-```
 ---
 
-## Python Modules
-
-#### Some of the python softwares are part of Python itself, or of other softwares. Use "`module key`"
-
-```bash
-module key toml
-The following modules match your search criteria: "toml"
-------------------------------------------------------------------------------------
-
-  Jupyter: Jupyter/2020.2.5-Python-3.8.5, Jupyter/2021.3.1-Python-3.8.5,
-    Jupyter/2021.3.2-Python-3.8.5, Jupyter/2022.3.3, Jupyter/2022.3.4
-    Project Jupyter exists to develop open-source software, open-standards,
-    and services for interactive computing across dozens of programming languages.
-    
-
-  PyQuil: PyQuil/3.0.1
-    PyQuil is a library for generating and executing Quil programs on the Rigetti
-    Forest platform.
-
-  Python: Python/3.8.5, Python/3.9.6, Python/3.10.4
-    Python is a programming language that lets you work more quickly and integrate 
-    your systems more effectively.
-
-------------------------------------------------------------------------------------
-```
----
-
-## VSCode
-#### Editing files on the supercomputers
-
-![](images/vscode-remotes.png)
-
----
-
-## VSCode
-
-![](images/vscode-jusuf.png)
-
----
-
-## VSCode
-
-- You can have a terminal inside VSCode: 
-  - Go to the menu View->Terminal
-
---- 
-
-## VSCode
-
-From the VSCode's terminal, navigate to your "course" folder and to the name you created earlier.
-
-```bash
-cd $HOME/course/
-pwd
-```
-
-- This is out working directory. We do everything here.
-
----
 
 ### Demo code
-#### Create a new file "`matrix.py`" on VSCode on Jureca DC
+2. Create a new Python file in your course folder.
 
 ```bash
-code matrix.py
+touch matrix.py
 ```
 
+Open it in the editor.
 Paste this into the file:
 
 ``` {.python .number-lines}
@@ -718,10 +315,10 @@ print("The result is:\n", result)
 ---
 
 ### How to run it on the login node
-
+3. Run it on the login node.
 ```
-module load Stages/2025 
-module load GCC OpenMPI Python PyTorch 
+module load Stages/2026
+module load GCC OpenMPI Python PyTorch
 python matrix.py
 ```
 
@@ -739,8 +336,9 @@ python matrix.py
 
 ---
 
-### SLURM 🤯
-![](images/slurm.jpg)
+### Slurm 🤯
+
+![](images/slurm.jpg){height=480px}
 
 Simple Linux Utility for Resource Management
 
@@ -748,37 +346,43 @@ Simple Linux Utility for Resource Management
 
 ### Slurm submission file
 
-- Simple text file which describes what we want and how much of it, for how long, and what to do with the results
+- A simple text file that describes what we want, how much of it we need, how long we need it, and what to do with the results
+
+4. Create a new file:
+
+```bash
+touch jureca-matrix.sbatch
+```
 
 ---
 
 ### Slurm submission file example
 
-`code jureca-matrix.sbatch`
+Paste the following content into the file:
 
-``` {.bash .number-lines}
+```{.bash .number-lines style="font-size: 0.9em;"}
 #!/bin/bash
-#SBATCH --account=training2626           # Who pays?
+#SBATCH --account=training2638          # Who pays?
 #SBATCH --nodes=1                        # How many compute nodes
 #SBATCH --job-name=matrix-multiplication
-#SBATCH --ntasks-per-node=1              # How many mpi processes/node
-#SBATCH --cpus-per-task=1                # How many cpus per mpi proc
+#SBATCH --ntasks-per-node=1              # How many MPI processes per node
+#SBATCH --cpus-per-task=1                # How many CPUs per MPI process
 #SBATCH --output=output.%j        # Where to write results
 #SBATCH --error=error.%j
 #SBATCH --time=00:01:00          # For how long can it run?
 #SBATCH --partition=dc-gpu         # Machine partition
-#SBATCH --reservation=RSPDLM_day1  # For today only
+#SBATCH --reservation=scicoco_day1  # Reservation (for today only)
 
-module load Stages/2025
-module load GCC OpenMPI PyTorch  # Load the correct modules on the compute node(s)
+module load Stages/2026
+module load GCC OpenMPI PyTorch # Load the correct modules on the compute node(s)
 
 srun python matrix.py            # srun tells the supercomputer how to run it
 ```
 
 ---
 
-### Submitting a job: SBATCH
-
+### Submitting a job: `sbatch`
+5. Submit the Slurm job.
 ```bash
 sbatch jureca-matrix.sbatch
 
@@ -789,38 +393,33 @@ Submitted batch job 412169
 
 ### Are we there yet?
 
-![](images/are-we-there-yet.gif)
+![](images/are-we-there-yet.gif){height=500px}
 
 --- 
 
 ### Are we there yet? 🐴
 
-`squeue --me`
+6. Check the status of the job using the following command:
 
 ```bash
-squeue --me
+watch squeue --me
    JOBID  PARTITION    NAME      USER    ST       TIME  NODES NODELIST(REASON)
-   412169 gpus         matrix-m  khalfaoui1 CF       0:02      1 jsfc013
+   412169 gpus         matrix-m  ewert4 CF       0:02      1 jsfc013
 
 ```
 
-#### ST is status:
+Close it with **Ctrl+C**.
 
-- PD (pending), 
-- CF(configuring), 
-- R (running),   
+`ST` is the status:
+
+- PD (pending)
+- CF (configuring)
+- R (running)
 - CG (completing)
 
 ---
 
-### Reservations
-
-- Some partitions have reservations, which means that only certain users can use them at certain times.
-- For this course, it's called `training2626`
-
---- 
-
-### Job is wrong, need to cancel
+### The job is wrong and needs to be cancelled
 
 ```bash
 scancel <JOBID>
@@ -830,111 +429,100 @@ scancel <JOBID>
 
 ### Check logs
 
-#### By now you should have output and error log files on your directory. Check them!
+7. By now, you should have output and error log files in your directory. Check them! For example:
 
 ```bash
-# Notice that this number is the job id. It's different for every job
-cat output.412169 
-cat error.412169 
+output.412169
+error.412169
 ```
 
-Or simply open it on VSCode!
-
----
-
-## Extra software, modules and kernels
-
-#### You want that extra software from `pip`....
-
-[venv/Kernel template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
-
-```bash
-cd $HOME/course/
-git clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git
-```
-
----
-
-## Example: Let's install some software!
-
-- Even though we have PyTorch, we don't have PyTorch Lightning Flash
-- Same for fast.ai and wandb
-- We will install them in a virtual environment
-
----
-
-### Example: Let's install some software!
-
-- Edit the file sc_venv_template/requirements.txt
-
-- Add these lines at the end: 
--
- ```bash
-# Add here the pip packages you would like to install on this virtual environment / kernel
-pip
-ipykernel
-fastai
-numba==0.60.0
-numpy==1.26.4
-scipy==1.13.1
-matplotlib==3.9.2
-scikit-learn==1.5.2
-pandas==2.2.2
-accelerate==1.1.1
-pyarrow==18.1.0
-transformers==4.46.3
-sentencepiece==0.2.0
-datasets==3.6.0
-fsspec==2025.2.0.*
-torch==2.8
-torchrun_jsc>=0.0.15
-wandb
-tensorboard
-lightning
-```
-
-- Run on the terminal: `sc_venv_template/setup.sh`
-
----
-
-### Example: Activating the virtual environment
-
-```bash
-source sc_venv_template/activate.sh
-```
-
----
-
-### Example: Activating the virtual environment
-
-```bash
-source sc_venv_template/activate.sh 
-The activation script must be sourced, otherwise the virtual environment will not work.
-Setting vars
-The following modules were not unloaded:
-  (Use "module --force purge" to unload all):
- 1) Stages/2025
-```
-
-```bash
-jureca01 $ python
-Python 3.11.3 (main, Jun 25 2023, 13:17:30) [GCC 12.3.0]
->>> import fastai
->>> fastai.__version__
-'2.7.14'
-
-```
+Here, 412169 is the job ID. You can open the files in the editor.
 
 ---
 
 ### Let's train a 🐈 classifier!
 
-This is a minimal demo, to show some quirks of the supercomputer
+This is a minimal demo to show some quirks of the supercomputer.
+
+We will train:
+
+- ResNet-34, a convolutional neural network pretrained on image data, to classify images as cats or dogs
+- Training data: the Oxford-IIIT Pet dataset, containing about 7,400 images of cats and dogs
+
+---
+
+### Some preparations
+1. Clone the repository:
+
+```bash
+git clone --branch scicoco https://github.com/sab148/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC.git
 ```
-code cats.py
+
+2. Go into the directory:
+
+```bash
+cd Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC
+```
+
+3. Load uv:
+
+```bash
+module load uv
 ```
 
 ---
+
+### Some preparations
+
+4. Create a virtual environment using the module's Python and expose the module packages.
+```bash
+uv venv --python "$(which python)" --system-site-packages
+```
+5. Activate the virtual environment.
+```bash
+source .venv/bin/activate
+```
+
+---
+
+### Some preparations
+
+6. Install the required software.
+
+```bash
+uv pip install -r requirements.txt
+```
+
+7. Activate the virtual environment.
+
+```bash
+source .venv/bin/activate
+```
+
+---
+
+### Some preparations
+
+8. To load the modules and activate the virtual environment automatically, open `$HOME/.bashrc` and paste the following lines below the existing content:
+```{.bash style="font-size: 0.55em;"}
+# Set up modules and venv for interactive terminals
+if [[ $- == *i* ]]; then
+    module load Stages/2026
+    module load GCC OpenMPI PyTorch torchvision uv
+
+    source $PROJECT/dl-on-hpc-workshop/$USER/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC/.venv/bin/activate
+fi
+```
+
+---
+
+## The cat classifier
+1. Create a file back in the project folder:
+```
+cd ~/course/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC
+touch cats.py
+```
+with the following content:
 
 ```python 
 from fastai.vision.all import *
@@ -945,11 +533,11 @@ path = untar_data(URLs.PETS)/'images'
 print("Finished downloading dataset")
 #
 def is_cat(x): return x[0].isupper()
-# Create the dataloaders and resize the images
+# Create the data loaders and resize the images
 dls = ImageDataLoaders.from_name_func(
     path, get_image_files(path), valid_pct=0.2, seed=42,
     label_func=is_cat, item_tfms=Resize(224))
-print("On the login node, this will download resnet34")
+print("On the login node, this will download ResNet-34")
 learn = vision_learner(dls, resnet34, metrics=accuracy)
 cbs=[SaveModelCallback(), TensorBoardCallback('runs', trace_model=True)]
 # Trains the model for 6 epochs with this dataset
@@ -961,13 +549,14 @@ learn.fit_one_cycle(6, cbs=cbs)
 
 ### Submission file for the classifier
 
+2. Create a Slurm file.
 ```bash
-code fastai.sbatch
+touch fastai.sbatch
 ```
 
-```bash
+```{.bash style="font-size: 0.85em;"}
 #!/bin/bash
-#SBATCH --account=training2626
+#SBATCH --account=training2638
 #SBATCH --mail-user=MYUSER@fz-juelich.de
 #SBATCH --mail-type=ALL
 #SBATCH --nodes=1
@@ -978,10 +567,15 @@ code fastai.sbatch
 #SBATCH --error=error.%j
 #SBATCH --time=00:20:00
 #SBATCH --partition=dc-gpu
-#SBATCH --reservation=RSPDLM_day1  # For today only
+#SBATCH --reservation=scicoco_day1  # For today only
 
-cd $HOME/course/
-source sc_venv_template/activate.sh # Now we finally use the fastai module
+cd $HOME/course/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC/
+
+
+module load Stages/2026
+module load GCC OpenMPI PyTorch torchvision # Load the correct modules on the compute node(s)
+
+source .venv/bin/activate # Activate the virtual environment
 
 srun python cats.py
 ```
@@ -990,63 +584,23 @@ srun python cats.py
 
 ### Submit it
 
+3. Run the cat classifier.
 ```bash
 sbatch fastai.sbatch
 ```
 
+
+
 ---
 
 ### Submission time
-
-- Check error and output logs, check queue
-
----
-
-### Probably not much happening...
-
-```bash
-$ cat output.7948496 
-The activation script must be sourced, otherwise the virtual environment will not work.
-Setting vars
-Downloading dataset...
-```
+4. Check the error and output logs and the queue.
 
 ---
-
-### But it might fail
-
-```bash
-$ cat err.7948496 
-The following modules were not unloaded:
-  (Use "module --force purge" to unload all):
-
-  1) Stages/2025
-```
-
----
-
-### 💥
-
----
-
-### What happened?
-
-It might be that it's not enough time for the job to give up
 
 Check the `error.${JOBID}` file
 
-If you run it longer, you will get the actual error:
-
-```python
-Traceback (most recent call last):
-  File "/p/project/training2626/khalfaoui1/cats.py", line 5, in <module>
-    path = untar_data(URLs.PETS)/'images'
-    ...
-    ...
-    raise URLError(err)
-urllib.error.URLError: <urlopen error [Errno 110] Connection timed out>
-srun: error: jwb0160: task 0: Exited with exit code 1
-```
+You will get an error. Why?
 
 ---
 
@@ -1061,44 +615,31 @@ This downloads the dataset:
 path = untar_data(URLs.PETS)/'images'
 ```
 
-And this one downloads the pre-trained weights:
+This line downloads the pre-trained weights:
 ```python
 learn = vision_learner(dls, resnet34, metrics=accuracy)
 ```
 
 ---
 
-
-## Remember, remember
-
-![](images/queue-finished.svg)
-
----
-
-## Remember, remember
-
-![](images/compute-nodes-no-net.svg)
-
----
-
-## Compute nodes have no internet connection
+## Compute nodes have no internet connection!
 
 - But the login nodes do!
-- So we download our dataset before...
+- So we download our dataset beforehand...
   - On the login nodes!
 
 ---
 
 
-## On the login node:
+## On the login node
 
-Comment out the line which does AI training:
+5. Comment out the line that performs the AI training:
 ```python
 # learn.fit_one_cycle(6, cbs=cbs)
 ```
-Call our code on the login node!
+Run the code on the login node!
 ```bash
-source sc_venv_template/activate.sh # So that we have fast.ai library
+source .venv/bin/activate # So that we have the fastai library
 python cats.py
 ```
 
@@ -1106,9 +647,9 @@ python cats.py
 
 ## Run the downloader on the login node
 
-```bash
-$ source sc_venv_template/activate.sh
-$ python cats.py 
+```{.bash style="font-size: 0.55em;"}
+$ source .venv/bin/activate
+$ python cats.py
 Downloading dataset...
  |████████-------------------------------| 23.50% [190750720/811706944 00:08<00:26]
  Downloading: "https://download.pytorch.org/models/resnet34-b627a593.pth" to /p/project/ccstao/cstao05/.cache/torch/hub/checkpoints/resnet34-b627a593.pth
@@ -1119,30 +660,20 @@ Downloading dataset...
 
 ## Run it again on the compute nodes!
 
-Un-comment back the line that does training:
+6. Uncomment the line that performs the training:
 ```python
 learn.fit_one_cycle(6, cbs=cbs)
 ```
-Submit the job!
+Submit the job again!
 ```bash
 sbatch fastai.sbatch
 ```
 
 ---
 
-## Waiting for the job to run?
+## 7. Check output files
 
-```bash
-watch squeue --me
-```
-(To exit, type CTRL-C)
-
----
-
-## Check output files
-
-You can see them within VSCode
-```bash
+```{.bash style="font-size: 0.9em;"}
 The activation script must be sourced, otherwise the virtual environment will not work.
 Setting vars
 Downloading dataset...
@@ -1166,154 +697,45 @@ epoch     train_loss  valid_loss  error_rate  time
 
 ### Tools for results analysis
 
-We already ran the code and have results
-To analyze them, there's a neat tool called Tensorboard
-And we already have the code for it on our example!
+We already ran the code and have results.
+To analyze them, there is a useful tool called TensorBoard.
+We already have the code for it in our example!
 ```python
 cbs=[SaveModelCallback(), TensorBoardCallback('runs', trace_model=True)]
 ```
 
 ---
 
-## Example: Tensorboard
-
-The command 
+## TensorBoard
+CHANGE THIS PART TO USE NOTEBOOK ON JUPYTER-JSC
+- If you have Python and pip installed on your local machine, you can install TensorBoard using:
 ```bash
-tensorboard --logdir=runs  --port=9999 serve
+python -m pip install tensorboard
 ```
-- Opens a connection on port 9999... *OF THE SUPERCOMPUTER*.
-- This port is behind the firewall. You can't access it directly... 
-- We need to bypass the firewall 🏴‍☠️
-  - SSH PORT FORWARDING
-
----
-
-## Example: Tensorboard
-
-![](images/supercomputer-firewall.svg)
-
----
-
-## Port Forwarding
-
-![A tunnel which exposes the supercomputer's port 3000 as port 1234 locally](images/port-forwarding.svg)
-
-
----
-
-## Port forwarding demo:
-
-On VSCode's terminal:
+- Right-click the TensorBoard log in Jupyter-JSC to download it.
+- On your local machine:
 ```bash
-cd $HOME/course/
-source sc_venv_template/activate.sh
-tensorboard --logdir=runs  --port=12345 serve
+tensorboard --logdir /path/to/log
 ```
-- Note the tab `PORTS` next to the terminal 
-- On the browser: [http://localhost:12345](http://localhost:12345)
 
 ---
 
-### Tensorboard on Jureca DC
+### TensorBoard
 
-![](images/tensorboard-cats.png)
-
+![](images/tensorboard-cats.png){height=500px}
 
 ---
 
 ## Day 1 recap
 
-As of now, I expect you managed to: 
+By now, I expect you have managed to:
 
-- Stay awake for the most part of this morning 😴
-- Have your own ssh keys 🗝️🔐
-- A working ssh connection to the supercomputers 🖥️
-- Can edit and transfer files via VSCode 📝
-- Submit jobs and read results 📫
-- Access web services on the login nodes 🧙‍♀️
-- Is ready to make great code! 💪
+- Stay awake for the most part of this afternoon 😴
+- Connect to JURECA using Jupyter-JSC
+- Edit files on JURECA
+- Submit jobs and read results
+- Be ready to write great code!
 
----
+**Tomorrow**: More about training and parallelization.
 
-## ANY QUESTIONS??
-
-#### Feedback is more than welcome!
-
----
-
-## Backup slides
-
----
-
-## There's more!
-
-- Remember the magic? 🧙‍♂️
-- Let's use it now to access the compute nodes directly!
-
----
-
-## Proxy Jump
-
-#### Accessing compute nodes directly
-
-- If we need to access some ports on the compute nodes
-- ![](images/proxyjump-magic.svg)
-
----
-
-## Proxy Jump - SSH Configuration
-
-Type on your machine "`code $HOME/.ssh/config`" and paste this at the end:
-
-```ssh
-
-# -- Compute Nodes --
-Host *.jureca
-        User [ADD YOUR USERNAME HERE]
-        StrictHostKeyChecking no
-        IdentityFile ~/.ssh/id_ed25519-JSC
-        ProxyJump jureca
-```        
-
----
-
-## Proxy Jump: Connecting to a node
-
-Example: A service provides web interface on port 9999
-
-On the supercomputer:
-
-```bash
-srun --time=00:05:00 \
-     --nodes=1 --ntasks=1 \
-     --partition=dc-gpu \
-     --account training2626 \
-     --cpu_bind=none \
-     --pty /bin/bash -i
-
-bash-4.4$ hostname # This is running on a compute node of the supercomputer
-jwb0002
-
-bash-4.4$ cd $HOME/course/
-bash-4.4$ source sc_venv_template/activate.sh
-bash-4.4$ tensorboard --logdir=runs  --port=9999 serve
-```
-
----
-
-## Proxy Jump 
-
-On your machine:
-
-```bash
-ssh -L :3334:localhost:9999 jrc002i.jureca
-```
-
-- Mind the `i` letter I added at the end of the hostname
-
-- Now you can access the service on your local browser at [http://localhost:3334](http://localhost:3334)
-
----
-
-### Now that's really the end! 😓
-
+Thank you for your attention! Any questions?
