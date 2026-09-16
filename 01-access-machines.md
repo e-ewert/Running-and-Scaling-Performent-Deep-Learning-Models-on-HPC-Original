@@ -707,7 +707,7 @@ cbs=[SaveModelCallback(), TensorBoardCallback('runs', trace_model=True)]
 ---
 
 ## TensorBoard
-
+CHANGE THIS PART TO USE NOTEBOOK ON JUPYTER-JSC
 - If you have Python and pip installed on your local machine, you can install TensorBoard using:
 ```bash
 python -m pip install tensorboard
