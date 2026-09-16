@@ -455,13 +455,13 @@ We will train:
 1. Clone the repository:
 
 ```bash
-git clone --branch scicoco https://github.com/sab148/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC.git
+git clone https://github.com/sab148/uv_jsc.git
 ```
 
 2. Go into the directory:
 
 ```bash
-cd Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC
+cd uv_jsc
 ```
 
 3. Load uv:
@@ -470,48 +470,24 @@ cd Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC
 module load uv
 ```
 
----
-
-### Some preparations
-
-4. Create a virtual environment using the module's Python and expose the module packages.
+4. Then install the .venv and the kernel and specify the name that you want to pass:
 ```bash
-uv venv --python "$(which python)" --system-site-packages
+./install.sh kernel-name "kernel name"
 ```
-5. Activate the virtual environment.
+
+5. Finally, activate the virtual environment.
 ```bash
 source .venv/bin/activate
 ```
 
 ---
 
-### Some preparations
+### More packages ?
 
-6. Install the required software.
-
-```bash
-uv pip install -r requirements.txt
-```
-
-7. Activate the virtual environment.
+If you want to install more packages you can add them in the requirements.txt file and run again 
 
 ```bash
-source .venv/bin/activate
-```
-
----
-
-### Some preparations
-
-8. To load the modules and activate the virtual environment automatically, open `$HOME/.bashrc` and paste the following lines below the existing content:
-```{.bash style="font-size: 0.55em;"}
-# Set up modules and venv for interactive terminals
-if [[ $- == *i* ]]; then
-    module load Stages/2026
-    module load GCC OpenMPI PyTorch torchvision uv
-
-    source $PROJECT/dl-on-hpc-workshop/$USER/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC/.venv/bin/activate
-fi
+./install.sh kernel-name "kernel name"
 ```
 
 ---
@@ -519,7 +495,6 @@ fi
 ## The cat classifier
 1. Create a file back in the project folder:
 ```
-cd ~/course/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC
 touch cats.py
 ```
 with the following content:
@@ -569,13 +544,10 @@ touch fastai.sbatch
 #SBATCH --partition=dc-gpu
 #SBATCH --reservation=scicoco_day1  # For today only
 
-cd $HOME/course/Running-and-Scaling-Performent-Deep-Learning-Models-on-HPC/
-
-
-module load Stages/2026
+module load Stages/2025
 module load GCC OpenMPI PyTorch torchvision # Load the correct modules on the compute node(s)
 
-source .venv/bin/activate # Activate the virtual environment
+source course/$USER$/uv_jsc/.venv/bin/activate # Activate the virtual environment
 
 srun python cats.py
 ```
@@ -707,16 +679,20 @@ cbs=[SaveModelCallback(), TensorBoardCallback('runs', trace_model=True)]
 ---
 
 ## TensorBoard
-CHANGE THIS PART TO USE NOTEBOOK ON JUPYTER-JSC
-- If you have Python and pip installed on your local machine, you can install TensorBoard using:
-```bash
-python -m pip install tensorboard
-```
-- Right-click the TensorBoard log in Jupyter-JSC to download it.
-- On your local machine:
-```bash
-tensorboard --logdir /path/to/log
-```
+- In the terminal enter:
+  ```bash
+  tensorboard   --logdir=runs   --port=6000   --host=127.0.0.1
+  ```
+
+- Then open a jupyter notebook, select your kernel and listen to the port typed previously in your cell by doing:
+  ```bash
+  import os
+  from IPython.display import IFrame
+
+  url = f"{os.environ['JUPYTERHUB_SERVICE_PREFIX']}proxy/6000/"
+
+  IFrame(url, width="100%", height=800)
+  ```
 
 ---
 
